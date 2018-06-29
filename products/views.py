@@ -4,4 +4,4 @@ from django.contrib.auth.decorators import login_required
 
 
 def home(request):
-    return render(request, 'products/home.html')
+    return render(request, 'products/home.html', {'title': 'Trade You'})

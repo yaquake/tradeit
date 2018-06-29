@@ -18,63 +18,72 @@
 
 <style>
     .dropdown-item:hover{background-color: #c9d874}
+    .form-control:focus {border-color: #68a500; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(104, 165, 0, 1);}
+
 </style>
   </head>
 
   <body>
    <div class="container">
        <div class="row">
-       <div class="col-6"><img src="{% static 'logo.png' %}" width="70%"/> </div>
-           <div class="col-6 float-right text-right"><br /><br />
-               <form method="POST">
-                   {% csrf_token %}
-                  <div class="form-group row text-right">
-                    <div class="col-sm-5">
-                      <input type="email" name="email" class="form-control form-control-sm" id="colFormLabelSm" placeholder="E-mail" required/>
-                    </div>
-                      <div class="col-sm-5">
-                          <input type="password" name="password" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Password" required>
-                      </div>
-                      <div class="col-sm-2">
-                          <button class="btn btn-success btn-sm submit">Log in</button>
-                      </div>
+       <div class="col-6"><a href="{% url 'home' %}"><img src="{% static 'logo.png' %}" width="80%"/></a></div>
+       <div class="col-6"><br /><br />
+           <form method="POST">
+               {% csrf_token %}
+              <div class="form-group form-row">
+                <div class="col-5">
+                  <input type="email" name="email" class="form-control form-control-sm" id="startLogin" placeholder="E-mail" required/>
+                </div>
+                  <div class="col-5 text-right">
+                      <input type="password" name="password" class="form-control form-control-sm" id="startPassword" placeholder="Password" required>
+                  </div>
+                  <div class="col-2 text-right">
+                      <button class="btn btn-success btn-sm submit">Log in</button>
+                  </div>
 
-                  </div></form>
-               <div>
-                          <p>Not a customer? Please <a href="#" class="text-success">register.</a></p>
-                      </div>
+              </div></form>
+           <div class="text-right">
+                      <p>Not a customer? Please <a href="{% url 'signup' %}" class="text-success">register.</a></p>
+                  </div>
 
-           </div></div>
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #72310b;">
-{#  <a class="navbar-brand" href="#">Navbar w/ text</a>#}
+       </div></div>
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #72310b;">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Categories
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Electronics <span class="badge badge-success badge-pill">1</span></a>
+          <a class="dropdown-item" href="#">Electronics <span class="badge badge-success badge-pill float-right">1</span></a>
           <a class="dropdown-item" href="#">Furniture</a>
           <a class="dropdown-item" href="#">Cars</a>
             <a class="dropdown-item" href="#">Property</a>
             <a class="dropdown-item" href="#">Games</a>
             <a class="dropdown-item" href="#">Computers</a>
             <a class="dropdown-item" href="#">Clothes</a>
-            <a class="dropdown-item" href="#">Slaves</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About us</a>
+        <a class="nav-link" href="{% url 'about' %}">About us</a>
       </li>
     </ul>
   </div>
+<form class="form-inline form-row" method="POST">
+    {% csrf_token %}
+  <div class="form-group col-auto">
+    <input type="text" name='search' class="form-control form-control-sm" id="inputSearch" placeholder="Search" required />
+  </div>
+    <div class="col-auto">
+  <button type="submit" class="btn btn-success btn-sm submit">Search</button></div>
+</form>
+
         </nav></div>
 
 
@@ -86,6 +95,7 @@
     <div class="container">
 
         {% block content %}
+
         {% endblock %}
 
     </div>
@@ -107,7 +117,7 @@
                   <small><a href="#" class="text-success">Privacy</a></small>
               </div>
               <div class="col-6">
-                  <small><a href="#" class="text-success">Paying</a></small><br />
+                  <small><a href="#" class="text-success">Payment</a></small><br />
                   <small><a href="#" class="text-success">Delivery</a></small><br />
                   <small><a href="#" class="text-success">For sellers</a></small><br />
                   <small><a href="#" class="text-success">For buyers</a></small><br />
@@ -124,7 +134,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
+    <script src="{% static 'js/userjs.js' %}"></script>
   </body>
 </html>
 
