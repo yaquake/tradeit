@@ -10,12 +10,13 @@
 <div class="col-md-6">
     <p><strong>Username: </strong>{{ user.username }}</p>
     <p><strong>Name: </strong>{{ user.first_name }} {{ user.last_name }}</p>
+    {% if profile %}
     <p><strong>Address: </strong>{{ profile.address }}, {{ profile.city }}, {{ profile.postcode }}, {{ profile.country }} </p>
     {% if profile.address2 %}
     <p><strong>Additional address: </strong>{{ profile.address2 }}</p>
     {% endif %}
     <p><strong>Phone: </strong>{{ profile.phone }}</p>
-
+    {% endif %}
 
 </div>
 </div>

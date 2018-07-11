@@ -5,6 +5,7 @@ from accounts.models import Profile
 from django.contrib import auth
 from datetime import date
 
+
 def signup(request):
     parent_directory = os.path.split(os.path.dirname(__file__))[0]
     f = open(parent_directory + '/static/countries.txt', 'r')
@@ -58,16 +59,18 @@ def logout(request):
 
 def login(request):
     if request.method == 'POST':
-        try:
-            user1 = User.objects.get(email__exact=request.POST['email'])
-            user = auth.authenticate(username=user1.username, password=request.POST['password'])
-            # if user is not None:
+        # try:
+        user1 = User.objects.get(email__exact=request.POST['email'])
+        user = auth.authenticate(username=user1.username, password=request.POST['password'])
+        if user is not None:
             auth.login(request, user)
             return redirect('home')
-        except User.DoesNotExist:
+    # except User.DoesNotExist:
+        else:
             return render(request, 'accounts/login.html', {'error': 'You have entered invalid data. '
                                                                     'Try to log in again. If you are not registered,'
-                                                                    ' please register'})
+                                                                    ' please register', 'title': 'Login'})
+
     else:
         return redirect('home')
 
@@ -81,6 +84,6 @@ def userprofile(request):
 def seller(request, uploader):
     muser = User.objects.get(username=uploader)
     profile = Profile.objects.get(user=muser)
-    return render(request, 'accounts/profile.html', {'user': muser, 'profile': profile, 'title': muser.username})
+    return render(request, 'accounts/seller.html', {'user': muser, 'profile': profile, 'title': muser.username})
 
 

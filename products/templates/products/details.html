@@ -56,6 +56,8 @@
     <p><strong>Seller: </strong><a href="{% url 'seller' uploader=product.uploader %}">{{ product.uploader }}</a></p>
     <p><strong>Description: </strong><br />{{ product.body }}</p>
     <p><strong>Date:</strong> {{ product.pub_date }}</p>
+    <br />
+    <a href="{% url 'addtocart' product_id=product.id %}"><button class="btn btn-success">Add to cart</button></a>
 </div>
 
 </div>

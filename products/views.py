@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import ContactForm
 from django.http import HttpResponseRedirect
-from .models import Product, Images
+from .models import Product, Images, Cart
 from django.utils import timezone
 
 
@@ -45,3 +45,19 @@ def create(request):
     else:
         return render(request, 'products/create.html')
 
+
+def cart(request):
+    korz = Cart.objects.filter(master=request.user)
+    product = Product()
+    return render(request, 'products/cart.html', {'result': korz, 'product': product})
+
+
+def addtocart(request, product_id):
+    if Cart.objects.filter(item__exact=product_id):
+        return redirect('/products/' + str(product_id))
+    else:
+        korz = Cart()
+        korz.item = Product(pk=product_id)
+        korz.master = request.user
+        korz.save()
+        return redirect('cart')

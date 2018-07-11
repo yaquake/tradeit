@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+{% for result in result %}
+    <h1>{{ result.item }}</h1>
+{% endfor %}
+
+
+{% endblock %}

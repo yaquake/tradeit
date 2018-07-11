@@ -23,3 +23,9 @@ class Images(models.Model):
     image4 = models.ImageField(upload_to='images/')
     image5 = models.ImageField(upload_to='images/')
 
+
+class Cart(models.Model):
+    master = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.OneToOneField(Product, on_delete=models.CASCADE)
+
+
