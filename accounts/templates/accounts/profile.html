@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<h1 style="color:#68a500;">Profile of {{ user.username }}:</h1><hr>
+<div class="row">
+<div class="col-md-6">
+    <img src="{{ profile.avatar.url }}" class="img-fluid img-thumbnail" />
+</div>
+<div class="col-md-6">
+    <p><strong>Username: </strong>{{ user.username }}</p>
+    <p><strong>Name: </strong>{{ user.first_name }} {{ user.last_name }}</p>
+    <p><strong>Address: </strong>{{ profile.address }}, {{ profile.city }}, {{ profile.postcode }}, {{ profile.country }} </p>
+    {% if profile.address2 %}
+    <p><strong>Additional address: </strong>{{ profile.address2 }}</p>
+    {% endif %}
+    <p><strong>Phone: </strong>{{ profile.phone }}</p>
+
+
+</div>
+</div>
+
+
+
+
+{% endblock %}

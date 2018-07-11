@@ -1,0 +1,40 @@
+These days, almost any transaction that you'd make in person, you can make online without ever having to leave your home. While making online purchases is much more convenient, it does require you to have a major credit card, debit card, or a major-branded prepaid card or gift card. Checks are seldom accepted, and cash is definitely not an option. If you don’t make online purchases often, completing the transaction can be confusing the first few times.
+
+Here are some instructions for paying online with a credit card.
+
+Before You Make the Purchase
+Fill your shopping cart by clicking “Add to Cart” or “Add to Bag” on each item you want to purchase. When you’re done, click the “Checkout” button (it’s usually in the upper right part of the screen). You may have to click on the shopping cart first and then select the option to check out. Review your cart to be sure you've added the correct amount, sizes, and colors of the items you want to purchase. Then, you can begin the purchase process.
+
+As with all credit card purchases, make sure you have enough available credit on your account before completing the transaction. Otherwise, your transaction could be declined and you'll have to find another payment method. And, if you haven’t used the credit card in awhile, you also need to be sure it’s active.
+
+4 Steps to Pay Online With a Credit Card
+Once you’re on the checkout page, you’ll have to enter several pieces of information to complete the transaction.
+
+Enter Your Shipping Address
+The shipping address allows the merchant to calculate your shipping price and update your purchase total. Make sure you enter the address to where you want the order shipped, even if it’s different from the billing address – where you receive your credit card statements.
+
+Choose Credit Card as Your Payment Method
+There will also be an option to choose the type of credit card you’re using, e.g. Visa, MasterCard, Discover, American Express, or a store credit card.
+
+If your credit card processor isn’t listed in the box, the merchant doesn’t accept that type of credit card. You’ll have to use another type of credit. You’ll encounter this more often with American Express and Discover than Visa or MasterCard.
+
+Enter Your Name as It Appears on Your Credit Card
+Look at the credit card to verify that you’ve entered your name correctly. Then, enter your credit card information: the credit card number, expiration date, and security code. For Visa, MasterCard, and Discover, the three-digit security code will be printed on the back of the card after the credit card number. The four-digit security code for American Express credit cards is printed on the front-right of the card, directly above the credit card number. If you’re using a store credit card, that’s not co-branded with a major credit card company, you will not be asked for a security code.
+
+Enter the Billing Address for Your Credit Card
+This is the address at which you receive your credit card statements. Note that this address may be different from the shipping address, for example, if your statements are received at the post office but you’d like your order shipped to your home or if you’re having the order shipped to someone as a gift.
+
+The billing address must be entered correctly for your credit card transaction to go through. Check your credit card statement if you're not sure of the exact billing address.
+
+How to Resolve Payment Issues
+If your credit card is declined, verify that you’ve entered each piece of information accurately: your name, billing address, and credit card details. Even something as minor as transposed numbers can cause an error with the transaction.
+
+You may have to use another credit card if card continues to be declined even after you've verified all the information is correct.
+
+Should You Save Your Credit Card Information?
+Many online merchants allow you to create a profile with a username and password and store your credit card, shipping, and billing information. It allows you to make future “one-click” purchases with the credit card details you’ve saved.
+
+You can save time on future purchases since you won’t have to re-enter your payment information (unless it changes). On the downside, it makes it easy for you to make impulse purchases or for someone with your login details to make purchases without having your credit card information.
+
+Using Paypal as a Payment Alternative
+Instead of entering your credit card information directly, you can use PayPal for payment processing. Before you can use Paypal for checkout, you’ll have to create an account and register your credit or debit card. Then, when you're ready to make a purchase, select "Pay with PayPal" as the payment option. You'll enter only your Paypal username and password, and Paypal will process the transaction with the payment information you have on file. Note that not all online stores accept Paypal.

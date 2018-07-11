@@ -2,9 +2,19 @@
 {% load staticfiles %}
 {% block content %}
 {#<iframe width="100%" height="500" src="https://www.youtube.com/embed/GuZkZwtCPhU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>#}
-<h1 style="color:#68a500;">Registration</h1><hr>
-    {{ error }}
-<form class="needs-validation" method="POST">{% csrf_token %}
+   <h1 style="color:#68a500;">Registration</h1>
+    {% if error %}
+        <p style="color: red;"><small>{{ error }}</small></p>
+    {% endif %}
+    <hr>
+
+<form class="needs-validation" method="POST" enctype="multipart/form-data">{% csrf_token %}
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="phone">Phone number</label>
+        <input type="text" name="number" class="form-control" id="idphone" placeholder="Phone number" required />
+    </div>
+</div>
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Email</label>
@@ -42,10 +52,10 @@
     </div>
 
       <div class="form-group col-md-3">
-      <label for="inputAge">Age</label>
-      <select name="age" id="inputAge" class="form-control" required>
+      <label for="inputDate">Year of Birth</label>
+      <select name="yearofbirth" id="inputAge" class="form-control" required>
         <option selected>Choose...</option>
-        {% for age in ages %}
+        {% for age in age %}
           <option>{{ age }}</option>
         {% endfor %}
       </select>
@@ -78,6 +88,13 @@
       <input type="number" name="postcode" class="form-control" id="inputZip" required />
     </div>
   </div>
+<p>Choose image. This image will be shown as your avatar. Not more than 5MB </p>
+    <div class="form-group col-md-6">
+        <input type="file" name="image" class="custom-file-input" id="customFile"
+               onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])" required>
+        <label class="custom-file-label" for="customFile">Choose image</label>
+    </div>
+
   <div class="form-group">
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="gridCheck" required />

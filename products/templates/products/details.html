@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<a href="{% url 'home' %}" class="text-success">Home > &nbsp</a><a href="#" class="text-success">{{ product.category }} > &nbsp</a>
+<a href="#" class="text-success">{{ product.subcategory }} </a>
+<h1>{{ product.title }}</h1>
+{% endblock %}

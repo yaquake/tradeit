@@ -17,26 +17,31 @@
     <!-- Custom styles for this template -->
 
 <style>
-    .dropdown-item:hover{background-color: #c9d874}
+    .dropdown-item:hover{background-color: #c9d874;}
     .form-control:focus {border-color: #68a500; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(104, 165, 0, 1);}
 
 </style>
   </head>
 
-  <body>
+  <body><br />
    <div class="container">
        <div class="row">
        <div class="col-6"><a href="{% url 'home' %}"><img src="{% static 'logo.png' %}" width="80%"/></a></div>
-       <div class="col-6"><br /><br />
+       <div class="col-6 text-right"><br /><br />
 
 
 {#          LOGIN FORM #}
 
            {% if user.is_authenticated %}
-               <a href="javascript:{document.getElementById('logout').submit()}" onclick="">LOGOUT</a>
+               <h5>Welcome, {{ user.username }}</h5>
+               <a href="{% url 'create' %}" class="text-success"><img src="{% static 'sell.png' %}" />Sell &nbsp</a>
+               <a href="#" class="text-success"><img src="{% static 'cart.png' %}" />My cart &nbsp</a>
+               <a href="{% url 'profile' %}" class="text-success"><img src="{% static 'boy.png' %}" />My profile &nbsp</a>
+
+               <a href="javascript:{document.getElementById('logout').submit()}" onclick="" class="text-success"><img src="{% static 'exit.png' %}" />Logout</a>
                 <form id="logout" method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <input type="hidden" />
+                    <input type="hidden" /><br />
                 </form>
 
 
@@ -65,7 +70,7 @@
 
 
        </div></div>
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #72310b;">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-image: linear-gradient(to bottom, #72310b, #803b13, #8e461b, #9c5024, #ab5b2c)">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -80,12 +85,12 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Electronics <span class="badge badge-success badge-pill float-right">1</span></a>
-          <a class="dropdown-item" href="#">Furniture</a>
-          <a class="dropdown-item" href="#">Cars</a>
-            <a class="dropdown-item" href="#">Property</a>
-            <a class="dropdown-item" href="#">Games</a>
-            <a class="dropdown-item" href="#">Computers</a>
-            <a class="dropdown-item" href="#">Clothes</a>
+          <a class="dropdown-item" href="#">Furniture <span class="badge badge-success badge-pill float-right">1</span></a>
+          <a class="dropdown-item" href="#">Cars <span class="badge badge-success badge-pill float-right">1</span></a>
+            <a class="dropdown-item" href="#">Property <span class="badge badge-success badge-pill float-right">1</span></a>
+            <a class="dropdown-item" href="#">Games <span class="badge badge-success badge-pill float-right">1</span></a>
+            <a class="dropdown-item" href="#">Computers <span class="badge badge-success badge-pill float-right">1</span></a>
+            <a class="dropdown-item" href="#">Clothes <span class="badge badge-success badge-pill float-right">1</span></a>
         </div>
       </li>
       <li class="nav-item">
@@ -127,15 +132,15 @@
 {#        <p class="float-left">&copy TradeYou Inc. {% now "Y" %}</p>#}
 {#          #}
           <div class="row">
-              <div class="col-6 text-right">
-                  <small><a href="#" class="text-success">Home</a></small><br />
+              <div class="col-6">
+                  <small><a href="{% url 'home' %}" class="text-success">Home</a></small><br />
                   <small><a href="{% url 'about' %}" class="text-success">About us</a></small><br />
-                  <small><a href="#" class="text-success">Contact us</a></small><br />
+                  <small><a href="{% url 'contact' %}" class="text-success">Contact us</a></small><br />
                   <small><a href="#" class="text-success">Information</a></small><br />
                   <small><a href="#" class="text-success">Privacy</a></small>
               </div>
               <div class="col-6">
-                  <small><a href="#" class="text-success">Payment</a></small><br />
+                  <small><a href="{% url 'payment' %}" class="text-success">Payment</a></small><br />
                   <small><a href="#" class="text-success">Delivery</a></small><br />
                   <small><a href="#" class="text-success">For sellers</a></small><br />
                   <small><a href="#" class="text-success">For buyers</a></small><br />

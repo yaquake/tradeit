@@ -10,6 +10,8 @@ class Profile(models.Model):
     address2 = models.TextField(max_length=50, blank=True)
     city = models.TextField(max_length=20)
     country = models.TextField(max_length=20)
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/1.png')
+    phone = models.TextField(max_length=15, default=True)
     postcode = models.IntegerField()
 
     def __str__(self):
