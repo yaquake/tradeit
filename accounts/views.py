@@ -75,5 +75,12 @@ def login(request):
 def userprofile(request):
     muser = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=muser)
-    return render(request, 'accounts/profile.html', {'user': muser, 'profile': profile})
+    return render(request, 'accounts/profile.html', {'user': muser, 'profile': profile, 'title': muser.username})
+
+
+def seller(request, uploader):
+    muser = User.objects.get(username=uploader)
+    profile = Profile.objects.get(user=muser)
+    return render(request, 'accounts/profile.html', {'user': muser, 'profile': profile, 'title': muser.username})
+
 

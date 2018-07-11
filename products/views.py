@@ -13,7 +13,8 @@ def home(request):
 
 def details(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    return render(request, 'products/details.html', {'product': product})
+    image = get_object_or_404(Images, item=product)
+    return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title})
 
 
 @login_required(login_url='/accounts/login')

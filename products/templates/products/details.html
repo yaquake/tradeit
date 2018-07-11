@@ -2,7 +2,61 @@
 {% load staticfiles %}
 {% block content %}
 
-<a href="{% url 'home' %}" class="text-success">Home > &nbsp</a><a href="#" class="text-success">{{ product.category }} > &nbsp</a>
-<a href="#" class="text-success">{{ product.subcategory }} </a>
-<h1>{{ product.title }}</h1>
+<a href="{% url 'home' %}" class="text-success">Home > &nbsp</a><a href="#" class="text-success">{{ product.category }} >&nbsp</a>
+<a href="#" class="text-success">{{ product.subcategory }} </a><hr>
+<h1>{{ product.title }}</h1><br />
+<div class="row">
+<div class="col-5">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+  </ol>
+  <div class="carousel-inner" style=" width:100%; height: 400px !important;">
+    <div class="carousel-item active">
+      <a href="{{ images.image1.url }}"><img class="d-block w-100" src="{{ images.image1.url }}" alt="First slide"></a>
+    </div>
+      {% if images.image2 %}
+    <div class="carousel-item">
+      <a href="{{ images.image2.url }}"><img class="d-block w-100" src="{{ images.image2.url }}" alt="Second slide"></a>
+    </div>
+      {% endif %}
+  {% if images.image3 %}
+    <div class="carousel-item">
+      <a href="{{ images.image3.url }}"><img class="d-block w-100" src="{{ images.image3.url }}" alt="Third slide"></a>
+    </div>
+      {% endif %}
+  {% if images.image4 %}
+    <div class="carousel-item">
+      <a href="{{ images.image4.url }}"><img class="d-block w-100" src="{{ images.image4.url }}" alt="Fourth slide"></a>
+    </div>
+      {% endif %}
+  {% if images.image5 %}
+    <div class="carousel-item">
+      <a href="{{ images.image5.url }}"><img class="d-block w-100" src="{{ images.image5.url }}" alt="Fifth slide"></a>
+    </div>
+      {% endif %}
+
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+</div>
+
+<div class="col-7">
+    <p><strong>Seller: </strong><a href="{% url 'seller' uploader=product.uploader %}">{{ product.uploader }}</a></p>
+    <p><strong>Description: </strong><br />{{ product.body }}</p>
+    <p><strong>Date:</strong> {{ product.pub_date }}</p>
+</div>
+
+</div>
 {% endblock %}
