@@ -5,6 +5,7 @@
 <a href="{% url 'home' %}" class="text-success">Home > &nbsp</a><a href="#" class="text-success">{{ product.category }} >&nbsp</a>
 <a href="#" class="text-success">{{ product.subcategory }} </a><hr>
 <h1>{{ product.title }}</h1><br />
+    {{ error }}
 <div class="row">
 <div class="col-5">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -57,7 +58,7 @@
     <p><strong>Description: </strong><br />{{ product.body }}</p>
     <p><strong>Date:</strong> {{ product.pub_date }}</p>
     <br />
-    <a href="{% url 'addtocart' product_id=product.id %}"><button class="btn btn-success">Add to cart</button></a>
+    <a href="{% url 'addtocart' product_id=product.id %}"><button class="btn btn-success" {{ disabled }}>Add to cart</button></a>
 </div>
 
 </div>

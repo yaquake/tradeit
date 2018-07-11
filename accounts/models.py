@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    age = models.IntegerField()
+    age = models.IntegerField(default=18)
     address = models.TextField(max_length=70)
     address2 = models.TextField(max_length=50, blank=True)
     city = models.TextField(max_length=20)
@@ -13,6 +13,7 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to='avatars/', default='avatars/1.png')
     phone = models.TextField(max_length=15, default=True)
     postcode = models.IntegerField()
+    items = models.IntegerField(default=0)
 
     def __str__(self):
         return "%s's profile" % self.user

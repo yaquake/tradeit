@@ -5,6 +5,7 @@ from .forms import ContactForm
 from django.http import HttpResponseRedirect
 from .models import Product, Images, Cart
 from django.utils import timezone
+from accounts.models import Profile
 
 
 def home(request):
@@ -14,7 +15,10 @@ def home(request):
 def details(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     image = get_object_or_404(Images, item=product)
-    return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title})
+    if Cart.objects.filter(item__exact=product_id, master=request.user):
+        return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title, 'disabled': 'disabled'})
+    else:
+        return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title})
 
 
 @login_required(login_url='/accounts/login')
@@ -48,16 +52,28 @@ def create(request):
 
 def cart(request):
     korz = Cart.objects.filter(master=request.user)
-    product = Product()
-    return render(request, 'products/cart.html', {'result': korz, 'product': product})
+    # cart_no = korz.count()
+    # user = request.user
+    # profile = Profile(user=user)
+    # profile.items = cart_no
+    # profile.save()
+    # product = Product()
+    title = str(request.user) + '\'s cart'
+    return render(request, 'products/cart.html', {'result': korz, 'title': title})
 
 
 def addtocart(request, product_id):
-    if Cart.objects.filter(item__exact=product_id):
+    if Cart.objects.filter(item=product_id, master=request.user):
         return redirect('/products/' + str(product_id))
+        # return render(request, 'products/details.html', {'error': 'Error'})
     else:
         korz = Cart()
         korz.item = Product(pk=product_id)
         korz.master = request.user
         korz.save()
+        user = request.user
+        profile = get_object_or_404(Profile, user=user)
+        print(profile)
+        profile.items += 1
+        profile.save()
         return redirect('cart')

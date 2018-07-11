@@ -91,7 +91,7 @@
 <p>Choose image. This image will be shown as your avatar. Not more than 5MB </p>
     <div class="form-group col-md-6">
         <input type="file" name="image" class="custom-file-input" id="customFile"
-               onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])" required>
+               onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
         <label class="custom-file-label" for="customFile">Choose image</label>
     </div>
 

@@ -35,7 +35,7 @@
            {% if user.is_authenticated %}
                <h5>Welcome, {{ user.username }}</h5>
                <a href="{% url 'create' %}" class="text-success"><img src="{% static 'sell.png' %}" />Sell &nbsp</a>
-               <a href="{% url 'cart' %}" class="text-success"><img src="{% static 'cart.png' %}" />My cart &nbsp</a>
+               <a href="{% url 'cart' %}" class="text-success"><img src="{% static 'cart.png' %}" />My cart({{ user.profile.items }}) &nbsp</a>
                <a href="{% url 'profile' %}" class="text-success"><img src="{% static 'boy.png' %}" />My profile &nbsp</a>
 
                <a href="javascript:{document.getElementById('logout').submit()}" onclick="" class="text-success"><img src="{% static 'exit.png' %}" />Logout</a>
