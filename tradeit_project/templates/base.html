@@ -20,6 +20,18 @@
     .dropdown-item:hover{background-color: #c9d874;}
     .form-control:focus {border-color: #68a500; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(104, 165, 0, 1);}
 
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    tr:nth-child(even) {background-color: #f2f2f2;}
+
 </style>
   </head>
 
@@ -32,20 +44,32 @@
 
 {#          LOGIN FORM #}
 
-           {% if user.is_authenticated %}
-               <h5>Welcome, {{ user.username }}</h5>
+{#           {% if user.is_authenticated %}#}
+               {% if request.user.is_authenticated and request.user.is_superuser  %}
+                   <h5>Welcome, {{ request.user.username }}</h5>
+                   <a href="{% url 'odmen' %}" class="text-success"><img src="{% static 'key.png' %}" />Admin &nbsp</a>
+                   <a href="javascript:{document.getElementById('logout').submit()}" onclick="" class="text-success"><img src="{% static 'exit.png' %}" />Logout</a>
+                <form id="logout" method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" /><br />
+                </form>
+                   {% endif %}
+
+                {% if request.user.is_authenticated and not request.user.is_superuser %}
+
+                   <h5>Welcome, {{ request.user.username }}</h5>
                <a href="{% url 'create' %}" class="text-success"><img src="{% static 'sell.png' %}" />Sell &nbsp</a>
-               <a href="{% url 'cart' %}" class="text-success"><img src="{% static 'cart.png' %}" />My cart({{ user.profile.items }}) &nbsp</a>
-               <a href="{% url 'profile' %}" class="text-success"><img src="{% static 'boy.png' %}" />My profile &nbsp</a>
+               <a href="{% url 'cart' %}" class="text-success"><img src="{% static 'cart.png' %}" />My cart({{ request.user.profile.items }}) &nbsp</a>
+               <a href="{% url 'myprofile' %}" class="text-success"><img src="{% static 'boy.png' %}" />My profile &nbsp</a>
 
                <a href="javascript:{document.getElementById('logout').submit()}" onclick="" class="text-success"><img src="{% static 'exit.png' %}" />Logout</a>
                 <form id="logout" method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
                     <input type="hidden" /><br />
                 </form>
+                {% endif %}
 
-
-           {% else %}
+           {% if not request.user.is_authenticated %}
            <form method="POST" action="{% url 'login' %}">
                {% csrf_token %}
               <div class="form-group form-row">
@@ -65,9 +89,9 @@
            <div class="text-right">
                       <p>Not a customer? Please <a href="{% url 'signup' %}" class="text-success">register.</a></p>
                   </div>
-           {% endif %}
-           </form>
 
+           </form>
+{% endif %}
 
        </div></div>
         <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-image: linear-gradient(to bottom, #72310b, #803b13, #8e461b, #9c5024, #ab5b2c)">
@@ -116,7 +140,6 @@
 
     </header><br />
     <div class="container">
-
         {% block content %}
 
         {% endblock %}
@@ -126,11 +149,6 @@
     <footer class="text-muted">
       <div class="container">
           <hr>
-{#        <p class="float-right">#}
-{#          <a href="#">Back to top</a>#}
-{#        </p>#}
-{#        <p class="float-left">&copy TradeYou Inc. {% now "Y" %}</p>#}
-{#          #}
           <div class="row">
               <div class="col-6">
                   <small><a href="{% url 'home' %}" class="text-success">Home</a></small><br />

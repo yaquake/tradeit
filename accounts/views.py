@@ -4,6 +4,13 @@ from django.contrib.auth.models import User
 from accounts.models import Profile
 from django.contrib import auth
 from datetime import date
+from products.models import Product, Images
+
+
+def odmen(request):
+    product = Product.objects.all().order_by('-pub_date')
+    image = Images.objects.all
+    return render(request, 'accounts/adminpage.html', {'product': product, 'images': image, 'title': 'Admin panel'})
 
 
 def signup(request):
@@ -12,21 +19,23 @@ def signup(request):
     countries = [line[:-1] for line in f]
     f.close()
     agerange = [age for age in range(2000, 1930, -1)]
-
     if request.method == 'POST':
         age = date.today().year - int(request.POST['yearofbirth'])
         if request.POST['password1'] == request.POST['password2']:
             if 8 <= len(request.POST['password1']) <= 20:
                 if User.objects.filter(username=request.POST['username']):
-                    return render(request, 'accounts/signup.html', {'countries': countries, 'age': agerange, 'title': 'Sign up',
+                    return render(request, 'accounts/signup.html', {'countries': countries, 'age': agerange,
+                                                                    'title': 'Sign up',
                                                                     'error': 'Username already exists'})
                 else:
                     if User.objects.filter(email=request.POST['email']):
-                        return render(request, 'accounts/signup.html', {'countries': countries, 'age': agerange, 'title': 'Sign up',
+                        return render(request, 'accounts/signup.html', {'countries': countries, 'age': agerange,
+                                                                        'title': 'Sign up',
                                                                         'error': 'E-mail already has been taken'})
                     else:
                         user = User.objects.create_user(username=request.POST['username'], email=request.POST['email'],
-                                                        password=request.POST['password1'], first_name=request.POST['firstname'],
+                                                        password=request.POST['password1'],
+                                                        first_name=request.POST['firstname'],
                                                         last_name=request.POST['lastname'])
                         user.save()
                         profile = Profile(user=user, age=age, address=request.POST['address'],
@@ -38,7 +47,8 @@ def signup(request):
                         return redirect('home')
 
             else:
-                return render(request, 'accounts/signup.html', {'countries': countries, 'age': agerange, 'title': 'Sign up',
+                return render(request, 'accounts/signup.html', {'countries': countries, 'age': agerange,
+                                                                'title': 'Sign up',
                                                                 'error': 'Password must be between 8 and 20 symbols'})
 
         else:
@@ -65,6 +75,8 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             return redirect('home')
+        elif user.is_superuser:
+            return redirect('admin')
     # except User.DoesNotExist:
         else:
             return render(request, 'accounts/login.html', {'error': 'You have entered invalid data. '
@@ -75,15 +87,21 @@ def login(request):
         return redirect('home')
 
 
-def userprofile(request):
-    muser = User.objects.get(username=request.user.username)
+def userprofile(request, user_id):
+    muser = User.objects.get(id=user_id)
     profile = Profile.objects.get(user=muser)
     return render(request, 'accounts/profile.html', {'user': muser, 'profile': profile, 'title': muser.username})
 
 
-def seller(request, uploader):
-    muser = User.objects.get(username=uploader)
-    profile = Profile.objects.get(user=muser)
-    return render(request, 'accounts/seller.html', {'user': muser, 'profile': profile, 'title': muser.username})
+# def seller(request, uploader):
+#     if request.user.is_superuser:
+#         return render(request, 'accounts/seller.html')
+#
+#     else:
+#         muser = User.objects.get(username=uploader)
+#         profile = Profile.objects.get(user=muser)
+#         return render(request, 'accounts/seller.html', {'user': muser, 'profile': profile, 'title': muser.username})
 
 
+def myprofile(request):
+    return render(request, 'accounts/myprofile.html')

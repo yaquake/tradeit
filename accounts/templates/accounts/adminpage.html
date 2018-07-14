@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <h1 style="color:#68a500;">Admin panel</h1><hr>
+   <table> <tr>
+       <th>id</th>
+       <th>Item name</th>
+       <th>Item uploader</th>
+       <th>Upload date</th>
+   </tr>
+    {% for product in product %}
+    <tr>
+    <td>{{ product.id }}</td>
+    <td><a href="{% url 'details' product.id %}">{{ product.title }}</a></td>
+    <td>{{ product.uploader }}</td>
+    <td>{{ product.pub_date }}</td>
+    </tr>
+
+
+
+{% endfor %}
+
+</table>
+
+
+
+{% endblock %}

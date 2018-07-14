@@ -2,7 +2,11 @@
 {% load staticfiles %}
 {% block content %}
 {#<iframe width="100%" height="500" src="https://www.youtube.com/embed/GuZkZwtCPhU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>#}
-   <h1 style="color:#68a500;">Registration</h1>
+
+    {% if request.user.is_authenticated %}
+    <p>Why do you want to register again?</p>
+    {% else %}
+    <h1 style="color:#68a500;">Registration</h1>
     {% if error %}
         <p style="color: red;"><small>{{ error }}</small></p>
     {% endif %}
@@ -128,5 +132,5 @@
 
   <button type="submit" class="btn btn-success">Register</button>
 </form>
-
+{% endif %}
 {% endblock %}

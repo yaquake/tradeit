@@ -7,8 +7,6 @@ class Product(models.Model):
     pub_date = models.DateTimeField()
     body = models.TextField()
     uploader = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.CharField(max_length=25, default=True)
-    subcategory = models.CharField(max_length=25, default=True)
     status = models.CharField(max_length=30, default='Active')
 
     def __str__(self):
@@ -18,14 +16,27 @@ class Product(models.Model):
 class Images(models.Model):
     item = models.OneToOneField(Product, on_delete=models.CASCADE)
     image1 = models.ImageField(upload_to='images/')
-    image2 = models.ImageField(upload_to='images/')
-    image3 = models.ImageField(upload_to='images/')
-    image4 = models.ImageField(upload_to='images/')
-    image5 = models.ImageField(upload_to='images/')
+    image2 = models.ImageField(upload_to='images/', null=True, blank=True)
+    image3 = models.ImageField(upload_to='images/', null=True, blank=True)
+    image4 = models.ImageField(upload_to='images/', null=True, blank=True)
+    image5 = models.ImageField(upload_to='images/', null=True, blank=True)
+
+    def __str__(self):
+        return str(self.item)
 
 
 class Cart(models.Model):
     master = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.OneToOneField(Product, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return str(self.master)
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 

@@ -54,11 +54,46 @@
 </div>
 
 <div class="col-7">
-    <p><strong>Seller: </strong><a href="{% url 'seller' uploader=product.uploader %}">{{ product.uploader }}</a></p>
+    <p><strong>Seller: </strong><a href="{% url 'userprofile' product.uploader.id %}">{{ product.uploader }}</a></p>
     <p><strong>Description: </strong><br />{{ product.body }}</p>
     <p><strong>Date:</strong> {{ product.pub_date }}</p>
     <br />
+    {% if not request.user.is_superuser and request.user.is_authenticated %}
     <a href="{% url 'addtocart' product_id=product.id %}"><button class="btn btn-success" {{ disabled }}>Add to cart</button></a>
+    {% endif %}
+{% if request.user.is_superuser and request.user.is_authenticated %}
+    <a href="#"><button class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-lg">Modify</button></a>
+    {% endif %}
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Change details for <br /> {{ product.title }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+          <form method="POST" action="{% url 'changedetails' product.id %}">{% csrf_token %}
+              <div class="form-group">
+                <label for="title" class="col-form-label">Title:</label>
+                <input type="text" name='title' class="form-control" id="title" required>
+              </div>
+              <div class="form-group">
+                <label for="body" class="col-form-label">Description:</label>
+                <textarea class="form-control" id="body" name="body"></textarea>
+              </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+
 </div>
 
 </div>

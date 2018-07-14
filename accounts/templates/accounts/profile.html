@@ -4,10 +4,10 @@
 
 <h1 style="color:#68a500;">Profile of {{ user.username }}:</h1><hr>
 <div class="row">
-<div class="col-md-6">
+<div class="col-md-4">
     <img src="{{ profile.avatar.url }}" class="img-fluid img-thumbnail" />
 </div>
-<div class="col-md-6">
+<div class="col-md-8">
     <p><strong>Username: </strong>{{ user.username }}</p>
     <p><strong>Name: </strong>{{ user.first_name }} {{ user.last_name }}</p>
     {% if profile %}
