@@ -18,11 +18,47 @@
     <p><strong>Phone: </strong>{{ profile.phone }}</p>
     {% endif %}
     <br />
-    <button class="btn btn-danger">Modify</button>
+    <button class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-lg">Modify</button>
 
 </div>
 </div>
 
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Change details for: {{ request.user.username }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+          <form method="POST" action="{% url 'changeprofile' %}">{% csrf_token %}
+
+              <div class="form-group">
+                <label for="address" class="col-form-label">Address:</label>
+                <input type="text" name='address' class="form-control" id="address" />
+              </div>
+
+              <div class="form-group">
+                <label for="address2" class="col-form-label">Address 2 (optional):</label>
+                <input type="text" name='address2' class="form-control" id="address2" />
+              </div>
+
+              <div class="form-group">
+                <label for="phone" class="col-form-label">Phone number:</label>
+                <input type="text" name='phone' class="form-control" id="phone" />
+              </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
 
 
 

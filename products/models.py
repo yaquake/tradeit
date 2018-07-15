@@ -17,7 +17,7 @@ class Product(models.Model):
     uploader = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, default='Active')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=True, blank=True, null=True)
-    price = models.FloatField()
+    price = models.IntegerField()
 
     def __str__(self):
         return self.title

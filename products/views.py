@@ -81,8 +81,12 @@ def addtocart(request, product_id):
 def changedetails(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Product, pk=product_id)
-        product.title = request.POST['title']
-        product.body = request.POST['body']
+        if request.POST['title']:
+            product.title = request.POST['title']
+        if request.POST['body']:
+            product.body = request.POST['body']
+        if request.POST['price']:
+            product.price = request.POST['price']
         product.save()
         return redirect('/products/' + str(product_id))
 
@@ -114,7 +118,7 @@ def productlist(request):
             subcat = Category.objects.filter(parent__name__contains=category1)
             product = Product.objects.filter(category__parent__name=category1).order_by('-pub_date')
             return render(request, "products/list.html", {'subcat': subcat, 'category': category1, 'title': category1,
-                                                          'result': product})
+                                                          'result': product, 'subcategory': 'all categories'})
 
     else:
         return render(request, "products/list.html")

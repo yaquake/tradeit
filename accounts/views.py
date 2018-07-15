@@ -93,6 +93,19 @@ def userprofile(request, user_id):
 
 def myprofile(request):
     profile = get_object_or_404(Profile, user=request.user)
-    print(profile)
     return render(request, 'accounts/myprofile.html', {'profile': profile, 'title': 'My profile'})
 
+
+def changeprofile(request):
+    if request.method == 'POST':
+        profile = Profile.objects.get(user__username=request.user.username)
+        if request.POST['address']:
+            profile.address = request.POST['address']
+        if request.POST['address2']:
+            profile.address2 = request.POST['address2']
+        if request.POST['phone']:
+            profile.phone = request.POST['phone']
+        profile.save()
+        return redirect('myprofile')
+    else:
+        return render(request, 'accounts/myprofile.html')

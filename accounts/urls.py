@@ -7,6 +7,6 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('profile/<int:user_id>', views.userprofile, name='userprofile'),
     path('myprofile', views.myprofile, name='myprofile'),
-    # path('<str:uploader>', views.seller, name='seller'),
     path('odmen', views.odmen, name='odmen'),
+    path('changeprofile', views.changeprofile, name='changeprofile'),
 ]

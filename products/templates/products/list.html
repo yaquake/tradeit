@@ -28,7 +28,8 @@
                 <img class="img-fluid img-thumbnail" src="{{ product.images.image1.url }}" width="200" />
             </div>
             <div class="col-6">
-                <a href="{% url 'details' product.id %}" class="text-success">{{ product.title }}</a>
+                <a href="{% url 'details' product.id %}" class="text-success">{{ product.title }}</a><br /><br />
+                <p>Uploader: <a href="{% url 'userprofile' product.uploader.id %}">{{ product.uploader }}</a></p>
             </div>
             <div class="col-3 text-right">
                 <h5 style="color:#72310b;">NZ$ <i>{{ product.price }}</i></h5>
