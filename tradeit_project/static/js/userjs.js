@@ -34,3 +34,16 @@ function emailValidation(email) {
         document.getElementById("emailValid").innerHTML = "<small><p style='color: red;'>Bad e-mail address</p></small>";
     }
 }
+
+
+
+function preview_image(event)
+{
+ let reader = new FileReader();
+ reader.onload = function()
+ {
+  let output = document.getElementById('output_image');
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}

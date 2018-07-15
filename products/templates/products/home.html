@@ -12,21 +12,21 @@
       <img class="d-block w-100" src="{% static 'office.jpg' %}" alt="First slide">
         <div class="carousel-caption d-none d-md-block">
             <h5>Computers</h5>
-            <p><a href="#" class="text-primary"><button class="btn btn-success">Computers</button></a></p>
+            <p><a href="{% url 'productlist' %}?cat=Computers" class="text-primary"><button class="btn btn-success">Computers</button></a></p>
         </div>
     </div>
     <div class="carousel-item">
       <img class="d-block w-100" src="{% static 'cars.jpg' %}" alt="Second slide">
         <div class="carousel-caption d-none d-md-block">
             <h5>Cars</h5>
-            <p><a href="#" class="text-primary"><button class="btn btn-success">Go to cars</button></a></p>
+            <p><a href="{% url 'productlist' %}?cat=Cars" class="text-primary"><button class="btn btn-success">Go to cars</button></a></p>
         </div>
     </div>
     <div class="carousel-item">
       <img class="d-block w-100" src="{% static 'furniture.jpg' %}" alt="Third slide">
         <div class="carousel-caption d-none d-md-block">
             <h5>Furniture</h5>
-            <p><a href="#" class="text-primary"><button class="btn btn-success">Furniture</button></a></p>
+            <p><a href="{% url 'productlist' %}?cat=Furniture" class="text-primary"><button class="btn btn-success">Furniture</button></a></p>
         </div>
     </div>
   </div>
@@ -44,54 +44,17 @@
 <br />
     <h2 style="color: #68a500;">Latest uploads:</h2>
 <br />
+    {% for product in product %}
 <div class="card " style="width: 18rem; display: inline-block; margin: 0px 20px 20px 0px;">
-  <img class="card-img-top" src="{% static 'office.jpg' %}" alt="Card image cap">
+  <img class="card-img-top img-fluid" src="{{ product.images.image1.url }}" alt="Card image cap" style="max-height: 90%; width: auto;">
   <div class="card-body">
-    <h5 class="card-title">Computer</h5>
-    <p class="card-text">Lorem ipsum dolor sit amet</p>
-    <a href="#" class="btn btn-success">Details</a>
+    <h5 class="card-title">{{ product.summary }}</h5><hr>
+      <h3  style="color: #68a500;">NZ$ {{ product.price }}</h3>
+    <a href="{% url 'details' product.id %}" class="btn btn-success">Details</a>
   </div>
 </div>
-<div class="card " style="width: 18rem; display: inline-block; margin: 0px 20px 20px 0px;">
-  <img class="card-img-top" src="{% static 'office.jpg' %}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Computer</h5>
-    <p class="card-text">Lorem ipsum dolor sit amet</p>
-    <a href="#" class="btn btn-success">Details</a>
-  </div>
-</div>
-<div class="card " style="width: 18rem; display: inline-block; margin: 0px 20px 20px 0px;">
-  <img class="card-img-top" src="{% static 'office.jpg' %}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Computer</h5>
-    <p class="card-text">Lorem ipsum dolor sit amet</p>
-    <a href="#" class="btn btn-success">Details</a>
-  </div>
-</div>
-<div class="card " style="width: 18rem; display: inline-block; margin: 0px 20px 20px 0px;">
-  <img class="card-img-top" src="{% static 'office.jpg' %}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Computer</h5>
-    <p class="card-text">Lorem ipsum dolor sit amet</p>
-    <a href="#" class="btn btn-success">Details</a>
-  </div>
-</div>
-<div class="card " style="width: 18rem; display: inline-block; margin: 0px 20px 20px 0px;">
-  <img class="card-img-top" src="{% static 'office.jpg' %}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Computer</h5>
-    <p class="card-text">Lorem ipsum dolor sit amet</p>
-    <a href="#" class="btn btn-success">Details</a>
-  </div>
-</div>
-<div class="card " style="width: 18rem; display: inline-block; margin: 0px 20px 20px 0px;">
-  <img class="card-img-top" src="{% static 'office.jpg' %}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Computer</h5>
-    <p class="card-text">Lorem ipsum dolor sit amet</p>
-    <a href="#" class="btn btn-success">Details</a>
-  </div>
-</div>
+    {% endfor %}
+
 
 </div>
 

@@ -32,10 +32,6 @@ class ImagesAdmin(admin.ModelAdmin):
         return obj.item.uploader.username
 
 
-
-
-
-
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Images, ImagesAdmin)
 admin.site.register(Category)

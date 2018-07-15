@@ -9,6 +9,7 @@
         <label for="title">Create a title of the product</label>
         <input type="text" name="title" class="form-control" id="title" placeholder="Title" required />
     </div>
+
 </div>
 
 <div class="form-row">
@@ -19,72 +20,73 @@
 </div>
 
 <div class="form-row">
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-6">
         <label for="cat">Choose category:</label>
-        <select class="form-control" name="cat" id="cat" required>
-            <option value="" selected disabled hidden>Choose category</option>
-            <option value="electronics">Electronics</option>
-            <option value="furniture">Furniture</option>
-            <option value="cars">Cars</option>
-            <option value="property">Property</option>
-            <option value="games">Games</option>
-            <option value="computers">Computers</option>
-            <option value="clothes">Clothes</option>
+        <select name="subcategory" id="cat" class="form-control">
+        <option value="" selected='True' disabled="disabled">Choose category:</option>
+
+        {% for cat in cats %}
+                <optgroup label="{{ cat.name }}">
+                {% for subcat in subcats %}
+                    {% if subcat.parent.name == cat.name %}
+                    <option value="{{ subcat.name }}" style="margin-left: 50px;">{{ subcat.name }}</option>
+                    {% endif %}
+                {% endfor %}
+                </optgroup>
+        {% endfor %}
         </select>
     </div>
-    <div class="form-group col-md-3">
-        <label for="subcat">Choose subcategory:</label>
-        <select class="form-control" name="subcat" id="subcat" required>
-            <option value="" selected disabled hidden>Choose subcategory</option>
-            <option value="phones">Mobile phones</option>
-            <option value="television">Television</option>
-            <option value="photography">Photography</option>
-            <option value="consoles">Game consoles</option>
-            <option value="players">MP3 Players</option>
-            <option value="accessories">Accessories</option>
-        </select>
-    </div>
+
+
 </div>
 <p>Choose at least one image of your product.<br /> Every image must be not more than 5Mb</p>
 <div class="input-group col-mb-6">
   <div class="custom-file col-md-6">
-    <input type="file" name="image1" class="custom-file-input" id="image1"
+    <input type="file" name="image1" class="custom-file-input" accept="image/*" id="image1"
            onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])" required>
-    <label class="custom-file-label" for="inputGroupFile01">Choose image 1</label>
+    <label class="custom-file-label" for="image1">Choose image 1</label>
   </div>
 </div>
     <br/>
 <div class="input-group col-mb-6">
   <div class="custom-file col-md-6">
-    <input type="file" name="image2" class="custom-file-input" id="image2"
+    <input type="file" name="image2" class="custom-file-input" accept="image/*" id="image2"
            onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
-    <label class="custom-file-label" for="inputGroupFile01">Choose image 2</label>
+    <label class="custom-file-label" for="image2">Choose image 2</label>
   </div>
 </div>
 <br/>
 <div class="input-group col-mb-6">
   <div class="custom-file col-md-6">
-    <input type="file" name="image3" class="custom-file-input" id="image3"
+    <input type="file" name="image3" class="custom-file-input" accept="image/*" id="image3"
            onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
-    <label class="custom-file-label" for="inputGroupFile01">Choose image 3</label>
+    <label class="custom-file-label" for="image3">Choose image 3</label>
   </div>
 </div>
 <br/>
 <div class="input-group col-mb-6">
   <div class="custom-file col-md-6">
-    <input type="file" name="image4" class="custom-file-input" id="image4"
+    <input type="file" name="image4" class="custom-file-input" accept="image/*" id="image4"
            onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
-    <label class="custom-file-label" for="inputGroupFile01">Choose image 4</label>
+    <label class="custom-file-label" for="image4">Choose image 4</label>
   </div>
 </div>
 <br/>
 <div class="input-group col-mb-6">
   <div class="custom-file col-md-6">
-    <input type="file" name="image5" class="custom-file-input" id="image5"
+    <input type="file" name="image5" class="custom-file-input" accept="image/*" id="image5"
            onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
-    <label class="custom-file-label" for="inputGroupFile01">Choose image 5</label>
+    <label class="custom-file-label" for="image5">Choose image 5</label>
   </div>
 </div>
+<br />
+<div class="form-row col-mb-6">
+    <div class="form-group col-md-6">
+        <label for="price">Input the price of your item:</label>
+        <input class="form-control" type="number" name="price" id="price" required/>
+    </div>
+</div>
+
     <br />
     <input type="submit" class="btn btn-success" value="Add product" />
 </form>

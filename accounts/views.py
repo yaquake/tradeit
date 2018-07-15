@@ -69,7 +69,6 @@ def logout(request):
 
 def login(request):
     if request.method == 'POST':
-        # try:
         user1 = User.objects.get(email__exact=request.POST['email'])
         user = auth.authenticate(username=user1.username, password=request.POST['password'])
         if user is not None:
@@ -77,7 +76,6 @@ def login(request):
             return redirect('home')
         elif user.is_superuser:
             return redirect('admin')
-    # except User.DoesNotExist:
         else:
             return render(request, 'accounts/login.html', {'error': 'You have entered invalid data. '
                                                                     'Try to log in again. If you are not registered,'
@@ -93,15 +91,8 @@ def userprofile(request, user_id):
     return render(request, 'accounts/profile.html', {'user': muser, 'profile': profile, 'title': muser.username})
 
 
-# def seller(request, uploader):
-#     if request.user.is_superuser:
-#         return render(request, 'accounts/seller.html')
-#
-#     else:
-#         muser = User.objects.get(username=uploader)
-#         profile = Profile.objects.get(user=muser)
-#         return render(request, 'accounts/seller.html', {'user': muser, 'profile': profile, 'title': muser.username})
-
-
 def myprofile(request):
-    return render(request, 'accounts/myprofile.html')
+    profile = get_object_or_404(Profile, user=request.user)
+    print(profile)
+    return render(request, 'accounts/myprofile.html', {'profile': profile, 'title': 'My profile'})
+

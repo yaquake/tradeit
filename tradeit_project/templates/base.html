@@ -1,5 +1,6 @@
 <!doctype html>
 {% load staticfiles %}
+{% load humanize %}
 <html lang="en">
   <head>
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
@@ -18,19 +19,12 @@
 
 <style>
     .dropdown-item:hover{background-color: #c9d874;}
+    .dropdown-menu {width: 200px !important;}
     .form-control:focus {border-color: #68a500; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(104, 165, 0, 1);}
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
+    table {border-collapse: collapse; width: 100%;}
+    th, td {padding: 8px; text-align: left; border-bottom: 1px solid #ddd;}
     tr:nth-child(even) {background-color: #f2f2f2;}
+
 
 </style>
   </head>
@@ -44,10 +38,9 @@
 
 {#          LOGIN FORM #}
 
-{#           {% if user.is_authenticated %}#}
                {% if request.user.is_authenticated and request.user.is_superuser  %}
                    <h5>Welcome, {{ request.user.username }}</h5>
-                   <a href="{% url 'odmen' %}" class="text-success"><img src="{% static 'key.png' %}" />Admin &nbsp</a>
+                   <a href="{% url 'odmen' %}" class="text-success"><img src="{% static 'key.png' %}" />Admin panel &nbsp</a>
                    <a href="javascript:{document.getElementById('logout').submit()}" onclick="" class="text-success"><img src="{% static 'exit.png' %}" />Logout</a>
                 <form id="logout" method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
@@ -107,14 +100,11 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Categories
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Electronics <span class="badge badge-success badge-pill float-right">1</span></a>
-          <a class="dropdown-item" href="#">Furniture <span class="badge badge-success badge-pill float-right">1</span></a>
-          <a class="dropdown-item" href="#">Cars <span class="badge badge-success badge-pill float-right">1</span></a>
-            <a class="dropdown-item" href="#">Property <span class="badge badge-success badge-pill float-right">1</span></a>
-            <a class="dropdown-item" href="#">Games <span class="badge badge-success badge-pill float-right">1</span></a>
-            <a class="dropdown-item" href="#">Computers <span class="badge badge-success badge-pill float-right">1</span></a>
-            <a class="dropdown-item" href="#">Clothes <span class="badge badge-success badge-pill float-right">1</span></a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" width="300">
+        {{ get_categories }}
+        {% for maincat in maincategory %}
+                <a class="dropdown-item" href="{% url 'productlist' %}?cat={{ maincat.name }}">{{ maincat.name }} <span class="badge badge-success badge-pill float-right">{{ product.cat.count }}</span></a>
+        {% endfor %}
         </div>
       </li>
       <li class="nav-item">

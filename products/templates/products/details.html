@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load humanize %}
 {% block content %}
 
-<a href="{% url 'home' %}" class="text-success">Home > &nbsp</a><a href="#" class="text-success">{{ product.category }} >&nbsp</a>
-<a href="#" class="text-success">{{ product.subcategory }} </a><hr>
-<h1>{{ product.title }}</h1><br />
+<a href="{% url 'home' %}" class="text-success">Home > &nbsp</a><a href="{% url 'productlist' %}?cat={{ category.parent }}" class="text-success">{{ category.parent }} >&nbsp</a>
+<a href="{% url 'productlist' %}?cat={{ category.parent }}&subcat={{ category.name }}" class="text-success">{{ category.name }} </a><hr>
+<h1>{{ product.title }}</h1><hr><br />
     {{ error }}
 <div class="row">
 <div class="col-5">
@@ -54,16 +55,28 @@
 </div>
 
 <div class="col-7">
+    <div class="row text-right">
+        <h1 style="color:#68a500; align-content: right;">NZ$ {{ product.price|intcomma }}</h1>
+    </div>
+    <hr>
     <p><strong>Seller: </strong><a href="{% url 'userprofile' product.uploader.id %}">{{ product.uploader }}</a></p>
     <p><strong>Description: </strong><br />{{ product.body }}</p>
     <p><strong>Date:</strong> {{ product.pub_date }}</p>
+
     <br />
-    {% if not request.user.is_superuser and request.user.is_authenticated %}
+    {% if not request.user.is_superuser and request.user.is_authenticated and request.user != product.uploader %}
     <a href="{% url 'addtocart' product_id=product.id %}"><button class="btn btn-success" {{ disabled }}>Add to cart</button></a>
     {% endif %}
-{% if request.user.is_superuser and request.user.is_authenticated %}
+
+{% if request.user.is_superuser and request.user.is_authenticated or request.user.is_authenticated and request.user == product.uploader %}
     <a href="#"><button class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-lg">Modify</button></a>
     {% endif %}
+
+
+
+
+
+{#  MODAL  #}
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">

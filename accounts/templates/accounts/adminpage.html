@@ -7,21 +7,43 @@
        <th>Item name</th>
        <th>Item uploader</th>
        <th>Upload date</th>
+       <th>Action</th>
    </tr>
     {% for product in product %}
     <tr>
     <td>{{ product.id }}</td>
-    <td><a href="{% url 'details' product.id %}">{{ product.title }}</a></td>
-    <td>{{ product.uploader }}</td>
+    <td><a href="{% url 'details' product.id %}" class="text-secondary">{{ product.title }}</a></td>
+    <td><a href="{% url 'userprofile' product.uploader.id %}" class="text-secondary">{{ product.uploader }}</a> </td>
     <td>{{ product.pub_date }}</td>
+    <td><a href="{% url 'delete' product.id %}"><button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
     </tr>
-
 
 
 {% endfor %}
 
 </table>
 
+
+{#<!-- Modal -->#}
+{#<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#  <div class="modal-dialog" role="document">#}
+{#    <div class="modal-content">#}
+{#      <div class="modal-header">#}
+{#        <h5 class="modal-title" id="exampleModalLabel">Delete the item</h5>#}
+{#        <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#          <span aria-hidden="true">&times;</span>#}
+{#        </button>#}
+{#      </div>#}
+{#      <div class="modal-body">#}
+{#          Do you really want to delete the item? It won't be possible to undone it.#}
+{#      </div>#}
+{#      <div class="modal-footer">#}
+{#        <button type="button" class="btn btn-danger">Delete</button>#}
+{#        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
 
 
 {% endblock %}

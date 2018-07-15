@@ -2,9 +2,34 @@
 {% load staticfiles %}
 {% block content %}
 <h1 style="color:#68a500;">Your cart:</h1><hr>
+
 {% for result in result %}
-    <h1>{{ result.item }}</h1>
+<div class="row">
+            <div class="col-3">
+                <img class="img-fluid img-thumbnail" src="{{ result.item.images.image1.url }}" width="200" />
+            </div>
+            <div class="col-6">
+                <a href="{% url 'details' result.item.id %}" class="text-success">{{ result.item.title }}</a><br />
+                <br /><br />
+                <p><a href="{% url 'deletefromcart' result.item.id %}"><button class="btn btn-danger btn-sm">Delete</button></a></p>
+            </div>
+            <div class="col-3 text-right">
+                <h5 style="color:#72310b;">NZ$ <i>{{ result.item.price }}</i></h5>
+{#                <a href="{% url 'details' product.id %}"><button class="btn btn-success">Details</button></a>#}
+            </div>
+</div><hr>
 {% endfor %}
 
+<div class="row">
+    <div class="col-3">
+        <h3>Total price: </h3>
+    </div>
+    <div class="col-6">
+
+    </div>
+    <div class="col-3 text-right">
+        <h2>NZ$ {{ payment_price }}</h2>
+    </div>
+</div>
 
 {% endblock %}

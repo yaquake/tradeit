@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<h1 style="color:#68a500;">Products in {{ category }}:</h1><hr>
+
+<div class="row">
+    <div class="col-3">
+        <table>
+            <tr>
+                <th>List of subcategories</th>
+            </tr>
+            {% for subcat in subcat %}
+            <tr>
+                <td><a href="{% url 'productlist' %}?cat={{ category }}&subcat={{ subcat }}"  style="color:#68a500;">{{ subcat }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="col-9">
+        {% if subcategory %}
+            <h3 style="color:#68a500;">Products in {{ subcategory }}:</h3><hr>
+        {% endif %}
+
+        {% for product in result %}
+        <div class="row">
+            <div class="col-3">
+                <img class="img-fluid img-thumbnail" src="{{ product.images.image1.url }}" width="200" />
+            </div>
+            <div class="col-6">
+                <a href="{% url 'details' product.id %}" class="text-success">{{ product.title }}</a>
+            </div>
+            <div class="col-3 text-right">
+                <h5 style="color:#72310b;">NZ$ <i>{{ product.price }}</i></h5>
+{#                <a href="{% url 'details' product.id %}"><button class="btn btn-success">Details</button></a>#}
+            </div>
+        </div>
+            <hr>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}
