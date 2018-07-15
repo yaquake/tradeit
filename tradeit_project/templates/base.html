@@ -103,7 +103,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" width="300">
         {{ get_categories }}
         {% for maincat in maincategory %}
-                <a class="dropdown-item" href="{% url 'productlist' %}?cat={{ maincat.name }}">{{ maincat.name }} <span class="badge badge-success badge-pill float-right">{{ product.cat.count }}</span></a>
+                <a class="dropdown-item" href="{% url 'productlist' %}?cat={{ maincat.name }}"><img src="{% static 'folder.png' %}" /> &nbsp{{ maincat.name }}</a>
         {% endfor %}
         </div>
       </li>
