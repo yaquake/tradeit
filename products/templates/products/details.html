@@ -59,7 +59,11 @@
         <h1 style="color:#68a500; align-content: right;">NZ$ {{ product.price|intcomma }}</h1>
     </div>
     <hr>
-    <p><strong>Seller: </strong><a href="{% url 'userprofile' product.uploader.id %}">{{ product.uploader }}</a></p>
+    {% if request.user.username == product.uploader.username %}
+        <p><strong>Seller: </strong><a href="{% url 'myprofile' %}">{{ product.uploader }}</a></p>
+    {% else %}
+        <p><strong>Seller: </strong><a href="{% url 'userprofile' product.uploader.id %}">{{ product.uploader }}</a></p>
+    {% endif %}
     <p><strong>Description: </strong><br />{{ product.body }}</p>
     <p><strong>Date:</strong> {{ product.pub_date }}</p>
 
