@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load humanize %}
+{% block content %}
+
+<h1>Search</h1><hr>
+
+
+
+<form method="GET" action="{% url 'search' %}">
+<div class="form-row">
+    <div class="form-group col-7">
+         <input name="search" type="text"  class="form-control" id="searchbar" placeholder="Input what you want to search" required/>
+    </div>
+
+    <div class="form-group col-4">
+        <select name="subcategory" id="cat" class="form-control">
+        <option value="" selected  disabled="disabled">Choose category:</option>
+
+        {% for cat in cats %}
+                <optgroup label="{{ cat.name }}">
+                {% for subcat in subcats %}
+                    {% if subcat.parent.name == cat.name %}
+                    <option value="{{ subcat.name }}" style="margin-left: 50px;">{{ subcat.name }}</option>
+                    {% endif %}
+                {% endfor %}
+                </optgroup>
+        {% endfor %}
+        </select>
+    </div>
+
+    <div class="for,-group col-1">
+        <input type="submit" value="Search" class="btn btn-success" />
+    </div>
+</div>
+</form>
+
+
+
+
+<h1>Search result for "{{ query }}": {{ result.count }}</h1><hr>
+
+    <div class="pagination justify-content-end" >
+    <span class="step-links">
+        {% if result.has_previous %}
+            <a href="?search={{ query }}&subcategory={{ subcategory }}&page=1" class="text-success">&laquo; first</a>
+            <a href="?search={{ query }}&subcategory={{ subcategory }}&page={{ result.previous_page_number }}" class="text-success">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ result.number }} of {{ result.paginator.num_pages }}
+        </span>
+
+        {% if result.has_next %}
+            <a href="?search={{ query }}&subcategory={{ subcategory }}&page={{ result.next_page_number }}" class="text-success">next</a>
+            <a href="?search={{ query }}&subcategory={{ subcategory }}&page={{ result.paginator.num_pages }}" class="text-success">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    <br />
+    {% for product in result %}
+<hr>
+
+        <div class="row">
+            <div class="col-3">
+                <img class="img-fluid img-thumbnail" src="{{ product.images.image1.url }}" width="200" />
+            </div>
+            <div class="col-6">
+                <a href="{% url 'details' product.id %}" class="text-success">{{ product.title }}</a><br /><br />
+                {% if request.user.username == product.uploader.username %}
+                    <p>Seller: <a href="{% url 'myprofile' %}">{{ product.uploader }}</a></p>
+                {% else %}
+                    <p>Seller: <a href="{% url 'userprofile' product.uploader.id %}">{{ product.uploader }}</a></p>
+                {% endif %}
+            </div>
+            <div class="col-3 text-right">
+                <h5 style="color:#72310b;">NZ$ <i>{{ product.price|intcomma }}</i></h5>
+            </div>
+        </div>
+
+{% endfor %}
+
+{% endblock %}

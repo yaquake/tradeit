@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import ContactForm
-from django.http import HttpResponseRedirect
 from .models import Product, Images, Cart, Category
 from django.utils import timezone
 from accounts.models import Profile
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
 def home(request):
@@ -41,10 +40,10 @@ def create(request):
 
             images = Images(item=product)
             images.image1 = request.FILES['image1']
-            images.image2 = request.FILES['image2']
-            images.image3 = request.FILES['image3']
-            images.image4 = request.FILES['image4']
-            images.image5 = request.FILES['image5']
+            images.image2 = request.FILES.get('image2', None)
+            images.image3 = request.FILES.get('image3', None)
+            images.image4 = request.FILES.get('image4', None)
+            images.image5 = request.FILES.get('image5', None)
             images.save()
             return redirect('/products/' + str(product.id))
     else:
@@ -107,18 +106,24 @@ def delete(request, product_id):
 def productlist(request):
     if request.method == 'GET':
         category1 = request.GET.get('cat')
-        if request.GET.get('subcat'):
+        if request.GET.get('subcat') != 'all categories':
             category2 = request.GET.get('subcat')
             product = Product.objects.filter(category__name=category2).order_by('-pub_date')
+            paginator = Paginator(product, 3)
+            page = request.GET.get('page')
+            result = paginator.get_page(page)
             subcat = Category.objects.filter(parent__name__contains=category1)
             return render(request, "products/list.html", {'subcat': subcat, 'category': category1, 'title': category1,
-                                                          'subcategory': category2, 'result': product})
+                                                          'subcategory': category2, 'result': result})
 
         else:
             subcat = Category.objects.filter(parent__name__contains=category1)
             product = Product.objects.filter(category__parent__name=category1).order_by('-pub_date')
+            paginator = Paginator(product, 3)
+            page = request.GET.get('page')
+            result = paginator.get_page(page)
             return render(request, "products/list.html", {'subcat': subcat, 'category': category1, 'title': category1,
-                                                          'result': product, 'subcategory': 'all categories'})
+                                                          'result': result, 'subcategory': 'all subcategories'})
 
     else:
         return render(request, "products/list.html")
@@ -131,3 +136,27 @@ def deletefromcart(request, product_id):
     profile.items -= 1
     profile.save()
     return redirect('cart')
+
+
+def search(request):
+    cats = Category.objects.filter(parent_id__isnull=True)
+    subcats = Category.objects.filter(parent_id__isnull=False)
+    search_query = request.GET.get('search')
+    # search_list = search_query.split()
+    # print(search_list)
+    # result = Product.objects.all()
+    # for s in search_list:
+    result = Product.objects.filter(title__icontains=search_query)
+    # print(result)
+    if request.GET.get('subcategory'):
+        result = result.filter(category__name__exact=request.GET.get('subcategory'))
+    paginator = Paginator(result, 10)
+    page = request.GET.get('page')
+    result = paginator.get_page(page)
+    return render(request, 'products/search.html', {'title': "Search results", 'result': result, 'cats': cats, 'subcats': subcats, 'query': search_query})
+
+
+def buy(request):
+    number = request.user.profile.items
+    print(number)
+    return render(request, 'products/buy.html')

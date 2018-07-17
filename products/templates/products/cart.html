@@ -33,4 +33,10 @@
     </div>
 </div>
 
+
+{% if request.user.profile.items != 0 %}
+<div class="row justify-content-end">
+<a href="{% url 'buy' %}"><button class="btn btn-success">Proceed to payment</button></a>
+</div>
+    {% endif %}
 {% endblock %}

@@ -2,17 +2,37 @@
 {% load staticfiles %}
 {% block content %}
     <h1 style="color:#68a500;">Admin panel</h1><hr>
-   <table> <tr>
-       <th>id</th>
-       <th>Item name</th>
-       <th>Item uploader</th>
-       <th>Upload date</th>
-       <th>Action</th>
+    <p align="right">
+    <div class="pagination justify-content-end" >
+    <span class="step-links">
+        {% if result.has_previous %}
+            <a href="?page=1" class="text-success">&laquo; first</a>
+            <a href="?page={{ result.previous_page_number }}" class="text-success">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ result.number }} of {{ result.paginator.num_pages }}.
+        </span>
+
+        {% if result.has_next %}
+            <a href="?page={{ result.next_page_number }}" class="text-success">next</a>
+            <a href="?page={{ result.paginator.num_pages }}" class="text-success">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    </p>
+   <table class="table">
+       <tr>
+           <th>id</th>
+           <th>Item name</th>
+           <th>Item uploader</th>
+           <th>Upload date</th>
+           <th>Action</th>
    </tr>
-    {% for product in product %}
+    {% for product in result %}
     <tr>
     <td>{{ product.id }}</td>
-    <td><a href="{% url 'details' product.id %}" class="text-secondary">{{ product.title }}</a></td>
+    <td width="50%"><a href="{% url 'details' product.id %}" class="text-secondary">{{ product.title }}</a></td>
     <td><a href="{% url 'userprofile' product.uploader.id %}" class="text-secondary">{{ product.uploader }}</a> </td>
     <td>{{ product.pub_date }}</td>
     <td><a href="{% url 'delete' product.id %}"><button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
@@ -22,28 +42,6 @@
 {% endfor %}
 
 </table>
-
-
-{#<!-- Modal -->#}
-{#<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
-{#  <div class="modal-dialog" role="document">#}
-{#    <div class="modal-content">#}
-{#      <div class="modal-header">#}
-{#        <h5 class="modal-title" id="exampleModalLabel">Delete the item</h5>#}
-{#        <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
-{#          <span aria-hidden="true">&times;</span>#}
-{#        </button>#}
-{#      </div>#}
-{#      <div class="modal-body">#}
-{#          Do you really want to delete the item? It won't be possible to undone it.#}
-{#      </div>#}
-{#      <div class="modal-footer">#}
-{#        <button type="button" class="btn btn-danger">Delete</button>#}
-{#        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
-{#      </div>#}
-{#    </div>#}
-{#  </div>#}
-{#</div>#}
 
 
 {% endblock %}

@@ -21,10 +21,6 @@
     .dropdown-item:hover{background-color: #c9d874;}
     .dropdown-menu {width: 200px !important;}
     .form-control:focus {border-color: #68a500; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(104, 165, 0, 1);}
-    {#table {border-collapse: collapse; width: 100%;}#}
-    {#th, td {padding: 8px; text-align: left; border-bottom: 1px solid #ddd;}#}
-    {#tr:nth-child(even) {background-color: #f2f2f2;}#}
-
 
 </style>
   </head>
@@ -32,7 +28,7 @@
   <body><br />
    <div class="container">
        <div class="row">
-       <div class="col-6"><a href="{% url 'home' %}"><img src="{% static 'logo3.png' %}" width="80%"/></a></div>
+       <div class="col-6"><a href="{% url 'home' %}"><img src="{% static 'logo4.png' %}" width="80%"/></a></div>
        <div class="col-6 text-right"><br /><br />
 
 
@@ -40,7 +36,7 @@
 
                {% if request.user.is_authenticated and request.user.is_superuser  %}
                    <h5>Welcome, {{ request.user.username }}</h5>
-                   <a href="{% url 'odmen' %}" class="text-success"><img src="{% static 'key.png' %}" />Admin panel &nbsp</a>
+                   <a href="{% url 'odmen' %}?page=1" class="text-success"><img src="{% static 'key.png' %}" />Admin panel &nbsp</a>
                    <a href="javascript:{document.getElementById('logout').submit()}" onclick="" class="text-success"><img src="{% static 'exit.png' %}" />Logout</a>
                 <form id="logout" method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
@@ -103,7 +99,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" width="300">
         {{ get_categories }}
         {% for maincat in maincategory %}
-                <a class="dropdown-item" href="{% url 'productlist' %}?cat={{ maincat.name }}"><img src="{% static 'folder.png' %}" /> &nbsp{{ maincat.name }}</a>
+                <a class="dropdown-item" href="{% url 'productlist' %}?cat={{ maincat.name }}&subcat=all categories"><img src="{% static 'folder.png' %}" /> &nbsp{{ maincat.name }}</a>
         {% endfor %}
         </div>
       </li>
@@ -112,7 +108,7 @@
       </li>
     </ul>
   </div>
-<form class="form-inline form-row" method="POST">
+<form class="form-inline form-row" method="GET" action="{% url 'search' %}?page=1">
     {% csrf_token %}
   <div class="form-group col-auto">
     <input type="text" name='search' class="form-control form-control-sm" id="inputSearch" placeholder="Search" required />

@@ -5,12 +5,22 @@ from accounts.models import Profile
 from django.contrib import auth
 from datetime import date
 from products.models import Product, Images
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
+
+@login_required()
 def odmen(request):
-    product = Product.objects.all().order_by('-pub_date')
-    image = Images.objects.all
-    return render(request, 'accounts/adminpage.html', {'product': product, 'images': image, 'title': 'Admin panel'})
+    if request.user.is_superuser:
+        product = Product.objects.all().order_by('-pub_date')
+        paginator = Paginator(product, 10)
+        page = request.GET.get('page')
+        result = paginator.get_page(page)
+        image = Images.objects.all
+        return render(request, 'accounts/adminpage.html', {'result': result, 'images': image, 'title': 'Admin panel'})
+    else:
+        return redirect('home')
 
 
 def signup(request):
