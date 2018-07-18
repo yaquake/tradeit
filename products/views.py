@@ -142,11 +142,12 @@ def search(request):
     cats = Category.objects.filter(parent_id__isnull=True)
     subcats = Category.objects.filter(parent_id__isnull=False)
     search_query = request.GET.get('search')
-    # search_list = search_query.split()
-    # print(search_list)
+    search_list = search_query.split()
+    print(search_list)
+    result = Product.objects.filter(title__icontains=search_list[0])
     # result = Product.objects.all()
-    # for s in search_list:
-    result = Product.objects.filter(title__icontains=search_query)
+    for s in search_list[1:]:
+        result = result | Product.objects.filter(title__icontains=s)
     # print(result)
     if request.GET.get('subcategory'):
         result = result.filter(category__name__exact=request.GET.get('subcategory'))
