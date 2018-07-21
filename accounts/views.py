@@ -48,10 +48,16 @@ def signup(request):
                                                         first_name=request.POST['firstname'],
                                                         last_name=request.POST['lastname'])
                         user.save()
-                        profile = Profile(user=user, age=age, address=request.POST['address'],
-                                          address2=request.POST['address2'], city=request.POST['city'],
-                                          country=request.POST['country'], postcode=request.POST['postcode'],
-                                          avatar=request.FILES['image'], phone=request.POST['number'])
+                        if request.FILES.get('image') is not None:
+                            profile = Profile(user=user, age=age, address=request.POST['address'],
+                                              address2=request.POST['address2'], city=request.POST['city'],
+                                              country=request.POST['country'], postcode=request.POST['postcode'],
+                                              phone=request.POST['number'], avatar=request.FILES.get('image'))
+                        else:
+                            profile = Profile(user=user, age=age, address=request.POST['address'],
+                                              address2=request.POST['address2'], city=request.POST['city'],
+                                              country=request.POST['country'], postcode=request.POST['postcode'],
+                                              phone=request.POST['number'])
                         profile.save()
                         auth.login(request, user)
                         return redirect('home')
@@ -79,14 +85,21 @@ def logout(request):
 
 def login(request):
     if request.method == 'POST':
-        user1 = User.objects.get(email__exact=request.POST['email'])
-        user = auth.authenticate(username=user1.username, password=request.POST['password'])
-        if user is not None:
-            auth.login(request, user)
-            return redirect('home')
-        elif user.is_superuser:
-            return redirect('admin')
-        else:
+        try:
+            user1 = User.objects.get(email__exact=request.POST['email'])
+            user = auth.authenticate(username=user1.username, password=request.POST['password'])
+            if user is not None:
+                auth.login(request, user)
+                return redirect('home')
+            elif user.is_superuser:
+                return redirect('admin')
+
+            else:
+                return render(request, 'accounts/login.html', {'error': 'You have entered invalid data. '
+                                                                        'Try to log in again. If you are not registered,'
+                                                                        ' please register', 'title': 'Login'})
+
+        except User.DoesNotExist:
             return render(request, 'accounts/login.html', {'error': 'You have entered invalid data. '
                                                                     'Try to log in again. If you are not registered,'
                                                                     ' please register', 'title': 'Login'})

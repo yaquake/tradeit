@@ -16,12 +16,16 @@ def details(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     image = get_object_or_404(Images, item=product)
     category = get_object_or_404(Category, id=product.category_id)
-    if Cart.objects.filter(item__exact=product_id, master=request.user):
-        return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title,
+    if request.user.is_authenticated:
+        if Cart.objects.filter(item__exact=product_id, master=request.user):
+            return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title,
                                                          'disabled': 'disabled', 'category': category})
+        else:
+            return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title,
+                                                         'category': category})
     else:
         return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title,
-                                                         'category': category})
+                                                         'disabled': 'disabled', 'category': category})
 
 
 @login_required(login_url='/accounts/login')
@@ -100,30 +104,30 @@ def delete(request, product_id):
     profile.items = items
     profile.save()
     product.delete()
-    return render(request, 'accounts/adminpage.html')
+    return redirect('odmen')
 
 
 def productlist(request):
     if request.method == 'GET':
         category1 = request.GET.get('cat')
-        if request.GET.get('subcat') != 'all categories':
+        if request.GET.get('subcat') == 'all categories':
+            subcat = Category.objects.filter(parent__name__contains=category1)
+            product = Product.objects.filter(category__parent__name=category1).order_by('-pub_date')
+            paginator2 = Paginator(product, 10)
+            page = request.GET.get('page')
+            result = paginator2.get_page(page)
+            return render(request, "products/list.html", {'subcat': subcat, 'category': category1, 'title': category1,
+                                                          'result': result, 'subcategory': 'all categories'})
+
+        else:
             category2 = request.GET.get('subcat')
             product = Product.objects.filter(category__name=category2).order_by('-pub_date')
-            paginator = Paginator(product, 3)
+            paginator2 = Paginator(product, 10)
             page = request.GET.get('page')
-            result = paginator.get_page(page)
+            result = paginator2.get_page(page)
             subcat = Category.objects.filter(parent__name__contains=category1)
             return render(request, "products/list.html", {'subcat': subcat, 'category': category1, 'title': category1,
                                                           'subcategory': category2, 'result': result})
-
-        else:
-            subcat = Category.objects.filter(parent__name__contains=category1)
-            product = Product.objects.filter(category__parent__name=category1).order_by('-pub_date')
-            paginator = Paginator(product, 3)
-            page = request.GET.get('page')
-            result = paginator.get_page(page)
-            return render(request, "products/list.html", {'subcat': subcat, 'category': category1, 'title': category1,
-                                                          'result': result, 'subcategory': 'all subcategories'})
 
     else:
         return render(request, "products/list.html")
@@ -143,21 +147,20 @@ def search(request):
     subcats = Category.objects.filter(parent_id__isnull=False)
     search_query = request.GET.get('search')
     search_list = search_query.split()
-    print(search_list)
     result = Product.objects.filter(title__icontains=search_list[0])
-    # result = Product.objects.all()
     for s in search_list[1:]:
         result = result | Product.objects.filter(title__icontains=s)
-    # print(result)
     if request.GET.get('subcategory'):
         result = result.filter(category__name__exact=request.GET.get('subcategory'))
+    result_number = result.count()
     paginator = Paginator(result, 10)
     page = request.GET.get('page')
     result = paginator.get_page(page)
-    return render(request, 'products/search.html', {'title': "Search results", 'result': result, 'cats': cats, 'subcats': subcats, 'query': search_query})
+    print(result)
+    return render(request, 'products/search.html', {'title': "Search results", 'result': result, 'cats': cats,
+                                                    'subcats': subcats, 'query': search_query, 'number': result_number})
 
 
 def buy(request):
     number = request.user.profile.items
-    print(number)
     return render(request, 'products/buy.html')

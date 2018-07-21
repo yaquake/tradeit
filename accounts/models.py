@@ -12,7 +12,7 @@ class Profile(models.Model):
     country = models.TextField(max_length=20)
     avatar = models.ImageField(upload_to='avatars/', default='avatars/1.png')
     phone = models.TextField(max_length=15, default=True)
-    postcode = models.IntegerField()
+    postcode = models.IntegerField(null=True, blank=True)
     items = models.IntegerField(default=0)
 
     def __str__(self):
