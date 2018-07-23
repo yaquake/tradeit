@@ -59,7 +59,25 @@
     </div>
   </div>
 </div>
+<br />
+
+<table class="table">
+       <tr>
+           <th>id</th>
+           <th>Item name</th>
+           <th>Upload date</th>
+           <th>Action</th>
+   </tr>
+    {% for product in product %}
+    <tr>
+    <td>{{ product.id }}</td>
+    <td width="50%"><a href="{% url 'details' product.id %}" class="text-secondary">{{ product.title }}</a></td>
+    <td>{{ product.pub_date }}</td>
+    <td><a href="{% url 'delete' product.id %}"><button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">Delete</button></a></td>
+    </tr>
 
 
+{% endfor %}
 
+</table>
 {% endblock %}

@@ -3,8 +3,9 @@
 {% load humanize %}
 {% block content %}
 
-<a href="{% url 'home' %}" class="text-success">Home > &nbsp</a><a href="{% url 'productlist' %}?cat={{ category.parent }}" class="text-success">{{ category.parent }} >&nbsp</a>
-<a href="{% url 'productlist' %}?cat={{ category.parent }}&subcat={{ category.name }}" class="text-success">{{ category.name }} </a><hr>
+<a href="{% url 'home' %}" class="text-success">Home > &nbsp</a>
+<a href="{% url 'productlist' %}?cat={{ category.parent }}&subcat=all categories&page=1" class="text-success">{{ category.parent }} >&nbsp</a>
+<a href="{% url 'productlist' %}?cat={{ category.parent }}&subcat={{ category.name }}&page=1" class="text-success">{{ category.name }} </a><hr>
 <h1>{{ product.title }}</h1><hr><br />
     {{ error }}
 <div class="row">

@@ -19,10 +19,10 @@ def details(request, product_id):
     if request.user.is_authenticated:
         if Cart.objects.filter(item__exact=product_id, master=request.user):
             return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title,
-                                                         'disabled': 'disabled', 'category': category})
+                                                             'disabled': 'disabled', 'category': category})
         else:
             return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title,
-                                                         'category': category})
+                                                             'category': category})
     else:
         return render(request, 'products/details.html', {'product': product, 'images': image, 'title': product.title,
                                                          'disabled': 'disabled', 'category': category})
@@ -56,6 +56,7 @@ def create(request):
         return render(request, 'products/create.html', {'title': 'Sell a new product', 'cats': cats, 'subcats': subcats})
 
 
+@login_required(login_url='/accounts/login')
 def cart(request):
     payment_price = 0
     korz = Cart.objects.filter(master=request.user)

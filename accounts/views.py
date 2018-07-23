@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
-
 @login_required()
 def odmen(request):
     if request.user.is_superuser:
@@ -111,12 +110,15 @@ def login(request):
 def userprofile(request, user_id):
     muser = User.objects.get(id=user_id)
     profile = Profile.objects.get(user=muser)
-    return render(request, 'accounts/profile.html', {'user': muser, 'profile': profile, 'title': muser.username})
+    product = Product.objects.filter(uploader=muser)
+    return render(request, 'accounts/profile.html', {'user': muser, 'profile': profile, 'title': muser.username,
+                                                     'product': product})
 
 
 def myprofile(request):
     profile = get_object_or_404(Profile, user=request.user)
-    return render(request, 'accounts/myprofile.html', {'profile': profile, 'title': 'My profile'})
+    product = Product.objects.filter(uploader__username=request.user.username)
+    return render(request, 'accounts/myprofile.html', {'profile': profile, 'title': 'My profile', 'product': product})
 
 
 def changeprofile(request):
